@@ -12,3 +12,5 @@ secondName;
 {
   secon;
 }
+
+"test" && 5 - 5 && [1];
