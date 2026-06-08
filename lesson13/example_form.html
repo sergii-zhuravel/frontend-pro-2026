@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="POST">
+      <input id="name" type="text" name="name" />
+      <input id="age" type="text" name="age" type="number" />
+      <input type="submit" />
+    </form>
+  </body>
+
+  <script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", handleFormSumbit);
+
+    function handleFormSumbit(event) {
+      event.preventDefault();
+
+      console.log(event.target.name.value);
+
+      form.reset();
+    }
+  </script>
+</html>
