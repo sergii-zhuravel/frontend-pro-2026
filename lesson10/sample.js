@@ -52,9 +52,40 @@ const fileSystem = {
       type: "file",
       size: 10,
     },
+    {
+      name: "todo2.txt",
+      type: "file",
+      size: 10,
+    },
   ],
 };
 
+// Беремо кореневу папку
+// в ній рахуємо скільки файлів (пройти по children):
+//    а. якщо це папка - то рахуємо скільки в ній
+// пройти по children
+//а. якщо це папка - то рахуємо скільки в ній
+//
+//b. якщо файл - додаємо до суми
+//    b. якщо файл - додаємо до суми
+
+function countFiles(node) {
+  if (node.type === "file") {
+    return 1;
+  }
+
+  // let sum = 0;
+
+  // for (let subNode of node.children) {
+  //   sum += countFiles(subNode);
+  // }
+
+  return node.children.reduce((acc, subNode) => acc + countFiles(subNode), 0);
+
+  // return sum;
+}
+
+console.log(countFiles(fileSystem));
 // root/
 // ├── documents/
 // │   ├── resume.pdf (120 KB)
@@ -77,18 +108,18 @@ const fileSystem = {
 // │  └─ family.png
 // └─ todo.txt
 
-function countFiles(node) {
-  if (node.type === "file") {
-    return 1;
-  }
+// function countFiles(node) {
+//   if (node.type === "file") {
+//     return 1;
+//   }
 
-  let total = 0;
+//   let total = 0;
 
-  for (const child of node.children) {
-    total += countFiles(child);
-  }
+//   for (const child of node.children) {
+//     total += countFiles(child);
+//   }
 
-  return total;
-}
+//   return total;
+// }
 
-console.log(countFiles(fileSystem));
+// console.log(countFiles(fileSystem));

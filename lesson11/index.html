@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <ul class="list">
+        <li id="item1">Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+      </ul>
+    </div>
+    <div id="myDiv" class="dark-theme">
+      <span>Test span</span>
+    </div>
+    <img
+      src="https://thumbs.dreamstime.com/b/sample-jpeg-fluffy-white-pomeranian-puppy-sits-looks-camera-colorful-balls-front-364720569.jpg"
+    />
+    <button onclick="count()">Count!</button>
+    <script>
+      function count() {
+        console.log(this);
+        console.log(1);
+      }
+    </script>
+
+    <button id="hello">Say Hello!</button>
+    <button id="remove">Remove Event Listener</button>
+    <script>
+      const btn = document.querySelector("#hello");
+      btn.addEventListener("click", handleSayHelloClick);
+
+      const removeBtn = document.querySelector("#remove");
+      removeBtn.addEventListener("click", () =>
+        btn.removeEventListener("click", handleSayHelloClick),
+      );
+
+      function handleSayHelloClick(event) {
+        console.log(event);
+        console.log(this);
+        console.log("Say Hello!");
+      }
+    </script>
+
+    <style>
+      .hidden {
+        visibility: hidden;
+      }
+    </style>
+  </body>
+</html>
