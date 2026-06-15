@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookies & Storage Quiz</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .question {
+        background: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        font-size: 18px;
+      }
+
+      .correct {
+        color: green;
+      }
+
+      .wrong {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cookies & Storage Quiz</h1>
+
+    <form id="quizForm"></form>
+
+    <button onclick="checkAnswers()">Submit Quiz</button>
+
+    <div id="result" class="result"></div>
+
+    <script>
+      const questions = [
+        {
+          q: "1. Яке основне призначення cookies?",
+          options: [
+            "Зберігати дані на сервері",
+            "Зберігати невеликі обсяги даних у браузері",
+            "Виконувати JavaScript-код",
+            "Оформлювати вебсторінки",
+          ],
+          answer: 1,
+        },
+        {
+          q: "2. Яка властивість використовується для доступу до cookies в JavaScript?",
+          options: [
+            "window.cookies",
+            "document.storage",
+            "document.cookie",
+            "localStorage.cookie",
+          ],
+          answer: 2,
+        },
+        {
+          q: "3. Що відбувається, якщо створити cookie без дати закінчення терміну дії?",
+          options: [
+            "Зберігатиметься назавжди",
+            "Видалиться через 30 днів",
+            "Стане сесійною cookie",
+            "Викличе помилку",
+          ],
+          answer: 2,
+        },
+        {
+          q: "4. Як можна видалити cookie?",
+          options: [
+            "Неможливо видалити",
+            "Встановити дату закінчення в минулому",
+            "Лише через налаштування браузера",
+            "Лише на сервері",
+          ],
+          answer: 1,
+        },
+        {
+          q: "5. Який атрибут cookie забороняє доступ до неї з JavaScript?",
+          options: ["expires", "path", "secure", "HttpOnly"],
+          answer: 3,
+        },
+        {
+          q: "6. Як довго дані зберігаються в localStorage?",
+          options: [
+            "До закриття браузера",
+            "До закриття вкладки",
+            "Поки їх явно не видалять",
+            "24 години",
+          ],
+          answer: 2,
+        },
+        {
+          q: "7. Який метод використовується для збереження даних у localStorage?",
+          options: ["add()", "save()", "setItem()", "put()"],
+          answer: 2,
+        },
+        {
+          q: "8. Що поверне localStorage.getItem(), якщо ключ не існує?",
+          options: ["undefined", "null", "false", "Порожній рядок"],
+          answer: 1,
+        },
+        {
+          q: "9. Чи можна зберігати JavaScript-об'єкти в localStorage напряму?",
+          options: [
+            "Так",
+            "Ні, потрібно перетворити в рядок",
+            "Лише масиви",
+            "Лише JSON-об'єкти",
+          ],
+          answer: 1,
+        },
+        {
+          q: "10. Який код правильно збереже об'єкт?",
+          options: [
+            'setItem("user", user)',
+            "save(user)",
+            'setItem("user", JSON.stringify(user))',
+            "localStorage.user = user",
+          ],
+          answer: 2,
+        },
+        {
+          q: "11. Як довго дані зберігаються в sessionStorage?",
+          options: [
+            "Назавжди",
+            "До перезапуску браузера",
+            "До закриття вкладки або вікна",
+            "1 година",
+          ],
+          answer: 2,
+        },
+        {
+          q: "12. Чи можуть дві вкладки браузера використовувати один і той самий sessionStorage?",
+          options: [
+            "Так",
+            "Ні",
+            "Лише в Chrome",
+            "Лише якщо дозволені cookies",
+          ],
+          answer: 1,
+        },
+        {
+          q: "13. Який метод видаляє один елемент зі сховища?",
+          options: ["deleteItem()", "remove()", "removeItem()", "clearItem()"],
+          answer: 2,
+        },
+        {
+          q: "14. Яке сховище автоматично надсилає дані разом із HTTP-запитами?",
+          options: ["localStorage", "sessionStorage", "Cookies", "Жодне"],
+          answer: 2,
+        },
+        {
+          q: "15. Яке сховище зазвичай має найменший ліміт пам'яті?",
+          options: ["localStorage", "sessionStorage", "Cookies", "IndexedDB"],
+          answer: 2,
+        },
+        {
+          q: "16. Що найкраще підходить для кошика покупок, який має зберігатися після закриття браузера?",
+          options: [
+            "sessionStorage",
+            "localStorage",
+            "Сесійна cookie",
+            "JavaScript-змінна",
+          ],
+          answer: 1,
+        },
+        {
+          q: "17. Що найкраще використовувати для тимчасового збереження даних багатокрокової форми в межах однієї вкладки?",
+          options: [
+            "localStorage",
+            "sessionStorage",
+            "Cookies",
+            "Параметри URL",
+          ],
+          answer: 1,
+        },
+        {
+          q: "18. Які типи даних можуть зберігатися в localStorage та sessionStorage без перетворення?",
+          options: ["Будь-які", "Лише рядки", "Лише об'єкти", "Лише числа"],
+          answer: 1,
+        },
+        {
+          q: "19. Який метод очищає все сховище?",
+          options: ["removeAll()", "deleteAll()", "clear()", "reset()"],
+          answer: 2,
+        },
+        {
+          q: "20. Що виведе код?\n\nlocalStorage.setItem('age', 25);\nconsole.log(typeof localStorage.getItem('age'));",
+          options: ['"number"', '"string"', '"object"', '"undefined"'],
+          answer: 1,
+        },
+        {
+          q: "21. Навіщо використовують JSON.stringify() перед збереженням об'єкта?",
+          options: [
+            "Для стиснення даних",
+            "Для перетворення об'єкта в рядок",
+            "Для шифрування",
+            "Для пришвидшення роботи",
+          ],
+          answer: 1,
+        },
+        {
+          q: "22. Який метод використовується для відновлення об'єкта після JSON.stringify()?",
+          options: [
+            "JSON.decode()",
+            "JSON.restore()",
+            "JSON.parse()",
+            "JSON.object()",
+          ],
+          answer: 2,
+        },
+      ];
+
+      const form = document.getElementById("quizForm");
+
+      questions.forEach((question, index) => {
+        const div = document.createElement("div");
+        div.className = "question";
+
+        let html = `<h3>${question.q}</h3>`;
+
+        question.options.forEach((option, optionIndex) => {
+          html += `
+            <label>
+                <input type="radio"
+                    name="q${index}"
+                    value="${optionIndex}">
+                ${option}
+            </label><br>
+        `;
+        });
+
+        div.innerHTML = html;
+        form.appendChild(div);
+      });
+
+      function checkAnswers() {
+        let score = 0;
+        let feedback = "";
+
+        questions.forEach((question, index) => {
+          const selected = document.querySelector(
+            `input[name="q${index}"]:checked`,
+          );
+
+          if (selected && Number(selected.value) === question.answer) {
+            score++;
+
+            feedback += `
+                <div class="correct">
+                    ✓ ${question.q}
+                </div>
+            `;
+          } else {
+            feedback += `
+                <div class="wrong">
+                    ✗ ${question.q}
+                </div>
+            `;
+          }
+        });
+
+        const percent = Math.round((score / questions.length) * 100);
+
+        document.getElementById("result").innerHTML = `
+        <h2>Score: ${score}/${questions.length}</h2>
+        <h3>${percent}%</h3>
+        ${feedback}
+    `;
+      }
+    </script>
+  </body>
+</html>
