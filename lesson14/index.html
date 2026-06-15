@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table>
+      <tbody></tbody>
+    </table>
+    <script>
+      //   const tableBody = document.querySelector("table>tbody");
+
+      //   for (let i = 1; i <= 10; i++) {
+      //     const tr = document.createElement("tr");
+      //     for (let j = 1; j <= 10; j++) {
+      //       const td = document.createElement("td");
+      //       td.textContent = i * j;
+      //       tr.appendChild(td);
+      //     }
+      //     tableBody.appendChild(tr);
+      //   }
+
+      const tableBody = document.querySelector("table>tbody");
+
+      for (let i = 1; i <= 10; i++) {
+        const tr = createTableRow();
+        for (let j = 1; j <= 10; j++) {
+          const td = createTableCell(i * j);
+          tr.appendChild(td);
+        }
+        tableBody.appendChild(tr);
+      }
+
+      function createTableRow() {
+        return document.createElement("tr");
+      }
+
+      function createTableCell(content) {
+        const td = document.createElement("td");
+        td.textContent = content;
+
+        return td;
+      }
+    </script>
+  </body>
+</html>

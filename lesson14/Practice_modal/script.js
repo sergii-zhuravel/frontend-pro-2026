@@ -20,6 +20,8 @@
 //   document.querySelector(".modal").style.display = "block";
 // });
 
+// Approach 2:
+
 // const modalSelector = ".js--modal";
 
 // const modal = document.querySelector(modalSelector);
@@ -49,6 +51,7 @@
 
 // init(".js--open", ".js--modal__close");
 
+// Approach 3:
 //////////
 const modalFirst = {
   init(modalSelector, openSelector, closeSelector) {

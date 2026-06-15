@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f4f4f4;
+        padding: 40px;
+        color: #333;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 16px;
+        text-align: left;
+      }
+
+      th {
+        background: #f0f0f0;
+      }
+
+      .btn {
+        background: #6a00ff;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 5px;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+
+      .card {
+        max-width: 500px;
+        margin: 20px auto;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 30px;
+      }
+
+      .full-btn {
+        width: 100%;
+        margin: 0;
+      }
+
+      .form-group {
+        margin-bottom: 12px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      pre {
+        color: #ff4da6;
+        font-size: 18px;
+        line-height: 1.7;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Age</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="card">
+      <button class="btn full-btn" id="addUser">Add user</button>
+    </div>
+
+    <div class="card" id="editUser">
+      <div class="form-group">
+        <input type="text" value="User" />
+      </div>
+
+      <div class="form-group">
+        <input type="text" value="000000000000" />
+      </div>
+
+      <div class="form-group">
+        <input type="number" value="30" />
+      </div>
+
+      <button class="btn full-btn">OK</button>
+    </div>
+
+    <div class="card">
+      <pre id="preview">
+ 
+{
+  "id": 91,
+  "name": "User",
+  "phone": "000000000000",
+  "age": "30"
+}</pre
+      >
+    </div>
+
+    <script>
+      const users = [
+        {
+          id: 91,
+          name: "John Doe",
+          phone: "1234567890",
+          age: 30,
+        },
+        {
+          id: 92,
+          name: "Jane Smith",
+          phone: "9876543210",
+          age: 25,
+        },
+        {
+          id: 93,
+          name: "Michael Brown",
+          phone: "5551234567",
+          age: 35,
+        },
+      ];
+
+      const tableBody = document.querySelector("tbody");
+
+      function createTableRow() {
+        return document.createElement("tr");
+      }
+
+      function createTableCell(content) {
+        const tableCell = document.createElement("td");
+        tableCell.textContent = content;
+
+        return tableCell;
+      }
+
+      function renderButton(title) {
+        const button = document.createElement("button");
+        button.classList.add("btn");
+        button.textContent = title;
+
+        return button;
+      }
+
+      function renderButtons() {
+        const tableCell = document.createElement("td");
+
+        const viewButton = renderButton("View");
+        viewButton.addEventListener("click", (event) => {
+          const userId = Number(event.target.closest("tr").dataset.id);
+          console.log(userId);
+
+          const user = users.filter((user) => user.id === userId);
+
+          document.getElementById("preview").textContent = JSON.stringify(
+            user,
+            null,
+            4,
+          );
+        });
+        tableCell.appendChild(viewButton);
+        tableCell.appendChild(renderButton("Edit"));
+        tableCell.appendChild(renderButton("Delete"));
+
+        return tableCell;
+      }
+
+      function renderUser(user) {
+        const tableRow = createTableRow();
+        tableRow.appendChild(createTableCell(user.id));
+        tableRow.appendChild(createTableCell(user.name));
+        tableRow.appendChild(createTableCell(user.phone));
+        tableRow.appendChild(createTableCell(user.age));
+        tableRow.appendChild(renderButtons());
+
+        tableRow.dataset.id = user.id;
+
+        tableBody.appendChild(tableRow);
+      }
+
+      for (let user of users) {
+        renderUser(user);
+      }
+    </script>
+  </body>
+</html>
