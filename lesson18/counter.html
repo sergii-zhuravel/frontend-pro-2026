@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <span>0</span>
+    <button>Start</button>
+    <script>
+      let counter = 0;
+      let intervalId;
+
+      document
+        .querySelector("button")
+        .addEventListener("click", handleButtonClick);
+
+      function handleButtonClick() {
+        if (!intervalId) {
+          intervalId = setInterval(increaseCounter, 1000);
+        }
+
+        // document.querySelector("button").disabled = true;
+      }
+
+      function increaseCounter() {
+        counter++;
+        document.querySelector("span").textContent = counter;
+      }
+    </script>
+  </body>
+</html>

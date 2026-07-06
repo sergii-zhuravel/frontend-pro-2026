@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+  </head>
+  <body>
+    <ul style="opacity: 0">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+    <button id="show">Show</button>
+    <button id="hide">Hide</button>
+
+    <script>
+      function changeOpacity(value) {
+        $("ul").fadeTo(2000, value);
+      }
+
+      $("#hide").on("click", () => changeOpacity(0));
+      $("#show").on("click", () => changeOpacity(1));
+    </script>
+  </body>
+</html>

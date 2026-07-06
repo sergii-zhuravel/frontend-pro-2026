@@ -105,15 +105,15 @@
 
     <div class="card" id="editUser">
       <div class="form-group">
-        <input type="text" value="User" />
+        <input name="user" type="text" value="User" />
       </div>
 
       <div class="form-group">
-        <input type="text" value="000000000000" />
+        <input name="phone" type="text" value="000000000000" />
       </div>
 
       <div class="form-group">
-        <input type="number" value="30" />
+        <input name="age" type="number" value="30" />
       </div>
 
       <button class="btn full-btn">OK</button>
@@ -132,7 +132,7 @@
     </div>
 
     <script>
-      const users = [
+      const initialUsers = [
         {
           id: 91,
           name: "John Doe",
@@ -152,6 +152,17 @@
           age: 35,
         },
       ];
+
+      const usersState = {
+        users: [],
+        getUser(id) {
+          return this.users.find((user) => user.id === id);
+        },
+        deleteUser(id) {
+          this.users = this.users.filter((user) => user.id !== id);
+          localStorage.setItem("users", JSON.stringify(usersState.users));
+        },
+      };
 
       const tableBody = document.querySelector("tbody");
 
@@ -180,9 +191,8 @@
         const viewButton = renderButton("View");
         viewButton.addEventListener("click", (event) => {
           const userId = Number(event.target.closest("tr").dataset.id);
-          console.log(userId);
 
-          const user = users.filter((user) => user.id === userId);
+          const user = usersState.getUser(userId);
 
           document.getElementById("preview").textContent = JSON.stringify(
             user,
@@ -191,8 +201,32 @@
           );
         });
         tableCell.appendChild(viewButton);
-        tableCell.appendChild(renderButton("Edit"));
-        tableCell.appendChild(renderButton("Delete"));
+
+        const editButton = renderButton("Edit");
+        editButton.addEventListener("click", (event) => {
+          const userId = Number(event.target.closest("tr").dataset.id);
+
+          const user = usersState.getUser(userId);
+
+          const editForm = document.getElementById("editUser");
+          const fields = editForm.querySelectorAll("[name]");
+          fields[0].value = user.name;
+          fields[1].value = user.phone;
+          fields[2].value = user.age;
+        });
+
+        tableCell.appendChild(editButton);
+
+        const deleteButton = renderButton("Delete");
+        deleteButton.addEventListener("click", (event) => {
+          const userId = Number(event.target.closest("tr").dataset.id);
+
+          usersState.deleteUser(userId);
+
+          event.target.closest("tr").remove();
+        });
+
+        tableCell.appendChild(deleteButton);
 
         return tableCell;
       }
@@ -210,9 +244,17 @@
         tableBody.appendChild(tableRow);
       }
 
-      for (let user of users) {
-        renderUser(user);
-      }
+      window.addEventListener("DOMContentLoaded", function () {
+        if (!localStorage.getItem("users")) {
+          localStorage.setItem("users", JSON.stringify(initialUsers));
+        }
+
+        usersState.users = JSON.parse(localStorage.getItem("users"));
+
+        for (let user of usersState.users) {
+          renderUser(user);
+        }
+      });
     </script>
   </body>
 </html>
