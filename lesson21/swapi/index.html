@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="./js/index.js" type="module"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>SWAPI</h1>
+      <form
+        action="https://swapi.dev/api"
+        class="input-group mb-3 js--swapi_form"
+      >
+        <span class="input-group-text" id="basic-addon3"
+          >https://swapi.dev/api/</span
+        >
+        <input
+          type="text"
+          name="url"
+          class="form-control js--swapi_input"
+          id="basic-url"
+          placeholder="people/1/"
+          aria-describedby="basic-addon3"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="submit"
+          id="button-addon2"
+        >
+          Get info
+        </button>
+      </form>
+      <div class="card">
+        <div class="card-body">
+          <span class="badge d-none bg-secondary js--swapi_controller"
+            >people</span
+          >
+          <span class="badge d-none bg-secondary js--swapi_id">1</span>
+          <div class="load d-none js--swapi_load">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <pre class="mt-2 mb-0 js--swapi_pre"></pre>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .card {
+        position: relative;
+      }
+      .load {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(50% - 18px);
+        text-align: center;
+      }
+    </style>
+  </body>
+</html>
